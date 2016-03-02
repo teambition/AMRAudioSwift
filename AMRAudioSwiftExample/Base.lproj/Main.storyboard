@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Example View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AMRAudioSwiftExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ExampleViewController" customModule="AMRAudioSwiftExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,8 +16,73 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBc-Ye-lwM">
+                                <rect key="frame" x="225" y="80" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.011764705882352941" green="0.66274509803921566" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="W9B-zd-Gtp"/>
+                                    <constraint firstAttribute="height" constant="150" id="aw8-pF-FgH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Playing">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="75"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="primaryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qs9-qH-sNY"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuA-xh-6lJ">
+                                <rect key="frame" x="0.0" y="270" width="600" height="330"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Jm7-aU-SM9"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="fdt-vz-TX4"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mt0-cZ-W4u">
+                                <rect key="frame" x="385" y="122" width="66" height="66"/>
+                                <color key="backgroundColor" red="0.011764705882352941" green="0.66274509803921566" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="CgO-u8-mhg"/>
+                                    <constraint firstAttribute="width" constant="66" id="wE9-9S-5p2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="33"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="94u-aF-oIR"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KuA-xh-6lJ" secondAttribute="trailing" id="1wH-hl-zPM"/>
+                            <constraint firstItem="mt0-cZ-W4u" firstAttribute="leading" secondItem="OBc-Ye-lwM" secondAttribute="trailing" constant="10" id="6yV-68-TL3"/>
+                            <constraint firstItem="mt0-cZ-W4u" firstAttribute="centerY" secondItem="OBc-Ye-lwM" secondAttribute="centerY" id="As6-zJ-iae"/>
+                            <constraint firstItem="KuA-xh-6lJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKC-DD-NMz"/>
+                            <constraint firstItem="OBc-Ye-lwM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="KyG-PR-tos"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KuA-xh-6lJ" secondAttribute="bottom" id="LpN-X1-aaF"/>
+                            <constraint firstItem="OBc-Ye-lwM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SHv-Sn-f3V"/>
+                            <constraint firstItem="KuA-xh-6lJ" firstAttribute="top" secondItem="OBc-Ye-lwM" secondAttribute="bottom" constant="40" id="eUj-2a-uXo"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="mt0-cZ-W4u" id="ORb-ne-sxi"/>
+                        <outlet property="primaryButton" destination="OBc-Ye-lwM" id="QLj-cN-TWl"/>
+                        <outlet property="tableView" destination="KuA-xh-6lJ" id="1Fh-h4-R7X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

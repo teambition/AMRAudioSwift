@@ -8,18 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		D31FE04B1C868D9400901072 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE04A1C868D9400901072 /* AppDelegate.swift */; };
-		D31FE04D1C868D9400901072 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE04C1C868D9400901072 /* ViewController.swift */; };
+		D31FE04D1C868D9400901072 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE04C1C868D9400901072 /* ExampleViewController.swift */; };
 		D31FE0501C868D9400901072 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D31FE04E1C868D9400901072 /* Main.storyboard */; };
 		D31FE0521C868D9400901072 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D31FE0511C868D9400901072 /* Assets.xcassets */; };
+		D31FE0841C86B8A300901072 /* AMRAudioSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */; };
+		D31FE0851C86B8A300901072 /* AMRAudioSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D31FE0861C86B8A400901072 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D31FE0851C86B8A300901072 /* AMRAudioSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D31FE0471C868D9400901072 /* AMRAudioSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMRAudioSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D31FE04A1C868D9400901072 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D31FE04C1C868D9400901072 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D31FE04C1C868D9400901072 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		D31FE04F1C868D9400901072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D31FE0511C868D9400901072 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D31FE0561C868D9400901072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = AMRAudioSwift.framework; path = "/Users/hongxin/Library/Developer/Xcode/DerivedData/AMRAudioSwift-cozxnvkhosgrwkdpgijtuuewgike/Build/Products/Debug-iphoneos/AMRAudioSwift.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31FE0841C86B8A300901072 /* AMRAudioSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +54,7 @@
 		D31FE03E1C868D9400901072 = {
 			isa = PBXGroup;
 			children = (
+				D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */,
 				D31FE0491C868D9400901072 /* AMRAudioSwiftExample */,
 				D31FE0481C868D9400901072 /* Products */,
 			);
@@ -53,7 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				D31FE04A1C868D9400901072 /* AppDelegate.swift */,
-				D31FE04C1C868D9400901072 /* ViewController.swift */,
+				D31FE04C1C868D9400901072 /* ExampleViewController.swift */,
 				D31FE04E1C868D9400901072 /* Main.storyboard */,
 				D31FE0511C868D9400901072 /* Assets.xcassets */,
 				D31FE0561C868D9400901072 /* Info.plist */,
@@ -71,6 +90,7 @@
 				D31FE0431C868D9400901072 /* Sources */,
 				D31FE0441C868D9400901072 /* Frameworks */,
 				D31FE0451C868D9400901072 /* Resources */,
+				D31FE0861C86B8A400901072 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,7 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D31FE04D1C868D9400901072 /* ViewController.swift in Sources */,
+				D31FE04D1C868D9400901072 /* ExampleViewController.swift in Sources */,
 				D31FE04B1C868D9400901072 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,9 +257,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/AMRAudioSwiftExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwiftExample;
 				PRODUCT_NAME = AMRAudioSwiftExample;
 			};
 			name = Debug;
@@ -248,9 +269,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/AMRAudioSwiftExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwiftExample;
 				PRODUCT_NAME = AMRAudioSwiftExample;
 			};
 			name = Release;
