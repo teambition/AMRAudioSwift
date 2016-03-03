@@ -10,11 +10,11 @@
 		D31FE07A1C86907C00901072 /* amrFileCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0751C86907C00901072 /* amrFileCodec.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D31FE07C1C86907C00901072 /* interf_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0771C86907C00901072 /* interf_dec.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D31FE07D1C86907C00901072 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0781C86907C00901072 /* interf_enc.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D31FE07E1C86907C00901072 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D31FE0791C86907C00901072 /* libopencore-amrnb.a */; };
 		D31FE0801C86A7AF00901072 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = D31FE07F1C86A7AF00901072 /* amrFileCodec.m */; };
 		D31FE0821C86B80F00901072 /* AMRAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */; };
 		D38FEE0C1C86D6ED00996AA3 /* AMRAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */; };
 		D38FEE0F1C86E22A00996AA3 /* AMRAudioSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D3F002F51C8816750079B0A5 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +23,11 @@
 		D31FE0751C86907C00901072 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
 		D31FE0771C86907C00901072 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
 		D31FE0781C86907C00901072 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
-		D31FE0791C86907C00901072 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		D31FE07F1C86A7AF00901072 /* amrFileCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = amrFileCodec.m; sourceTree = "<group>"; };
 		D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMRAudioRecorder.swift; sourceTree = "<group>"; };
 		D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMRAudio.swift; sourceTree = "<group>"; };
 		D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRAudioSwift.h; sourceTree = "<group>"; };
+		D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D31FE07E1C86907C00901072 /* libopencore-amrnb.a in Frameworks */,
+				D3F002F51C8816750079B0A5 /* libopencore-amrnb.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +85,7 @@
 				D31FE07F1C86A7AF00901072 /* amrFileCodec.m */,
 				D31FE0771C86907C00901072 /* interf_dec.h */,
 				D31FE0781C86907C00901072 /* interf_enc.h */,
-				D31FE0791C86907C00901072 /* libopencore-amrnb.a */,
+				D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -277,7 +277,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/AMRAudioSwift/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -301,7 +301,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/AMRAudioSwift/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
