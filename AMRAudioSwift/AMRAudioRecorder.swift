@@ -124,6 +124,13 @@ public class AMRAudioRecorder: NSObject {
     }
 
     // MARK: - Play
+    /**
+    Plays an AMR audio asynchronously.
+
+    If is playing, stop play, else start play.
+
+    - parameter data: AMR audio data
+    */
     public func play(data: NSData) {
         if player == nil {
             // is not playing, start play
@@ -153,6 +160,13 @@ public class AMRAudioRecorder: NSObject {
         inactiveAudioSession()
     }
 
+    /**
+     Get the duration of an audio data.
+
+     - parameter data: WAVE audio data
+
+     - returns: an optional NSTimeInterval instance.
+     */
     public class func audioDuration(data: NSData) -> NSTimeInterval? {
         do {
             let player = try AVAudioPlayer(data: data)
