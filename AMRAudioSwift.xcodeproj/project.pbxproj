@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D31FE07A1C86907C00901072 /* amrFileCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0751C86907C00901072 /* amrFileCodec.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D31FE07C1C86907C00901072 /* interf_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0771C86907C00901072 /* interf_dec.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D31FE07D1C86907C00901072 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0781C86907C00901072 /* interf_enc.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D31FE07A1C86907C00901072 /* amrFileCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0751C86907C00901072 /* amrFileCodec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D31FE07C1C86907C00901072 /* interf_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0771C86907C00901072 /* interf_dec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D31FE07D1C86907C00901072 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0781C86907C00901072 /* interf_enc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D31FE0801C86A7AF00901072 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = D31FE07F1C86A7AF00901072 /* amrFileCodec.m */; };
 		D31FE0821C86B80F00901072 /* AMRAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */; };
 		D38FEE0C1C86D6ED00996AA3 /* AMRAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */; };
-		D38FEE0F1C86E22A00996AA3 /* AMRAudioSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D38FEE0F1C86E22A00996AA3 /* AMRAudioSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3F002F51C8816750079B0A5 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */; };
 /* End PBXBuildFile section */
 
