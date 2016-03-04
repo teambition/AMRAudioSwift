@@ -1,5 +1,5 @@
 #AMRAudioSwift
-AMRAudioSwift is an useful tool to encode or decode audio between AMR and WAVE. It's written in Swift, and it supports [Bitcode](https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW3).
+AMRAudioSwift is a useful tool to encode or decode audio between AMR and WAVE. It's written in Swift, and it supports [Bitcode](https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW3).
 
 In addition, AMRAudioSwift contains an audio recorder/player, which can record voice and play AMR data.
 
