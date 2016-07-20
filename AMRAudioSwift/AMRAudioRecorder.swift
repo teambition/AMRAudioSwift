@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-public protocol AMRAudioRecorderDelegate {
+public protocol AMRAudioRecorderDelegate: class {
     func audioRecorderDidStartRecording(audioRecorder: AMRAudioRecorder)
     func audioRecorderDidCancelRecording(audioRecorder: AMRAudioRecorder)
     func audioRecorderDidStopRecording(audioRecorder: AMRAudioRecorder, url: NSURL?)
@@ -62,7 +62,7 @@ public extension AMRAudioRecorderDelegate {
 
 public class AMRAudioRecorder: NSObject {
     public static let sharedRecorder = AMRAudioRecorder()
-    public var delegate: AMRAudioRecorderDelegate?
+    public weak var delegate: AMRAudioRecorderDelegate?
     public private(set) var recorder: AVAudioRecorder? {
         didSet {
             if let _ = recorder {
@@ -154,6 +154,7 @@ public class AMRAudioRecorder: NSObject {
     }
 
     public func stopPlay() {
+        removeProximitySensorObserver()
         player?.stop()
         player = nil
         delegate?.audioRecorderDidStopPlaying(self)
@@ -234,7 +235,7 @@ extension AMRAudioRecorder {
     // MARK: - Device Observer
     private func addProximitySensorObserver() {
         UIDevice.currentDevice().proximityMonitoringEnabled = proximityMonitoringEnabled
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceProximityStateDidChange:", name: UIDeviceProximityStateDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deviceProximityStateDidChange(_:)), name: UIDeviceProximityStateDidChangeNotification, object: nil)
     }
 
     private func removeProximitySensorObserver() {
