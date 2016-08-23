@@ -41,6 +41,8 @@ public protocol AMRAudioRecorderDelegate: class {
     /**
      Called when a sound has finished playing.
 
+     This method is not called upon an audio interruption. Rather, an audio player is paused upon interruption—the sound has not finished playing.
+
      - parameter audioRecorder: The AMRAudioRecorder that finished playing.
      - parameter flag:          true on successful completion of playback; false if playback stopped because the system could not decode the audio data.
      */
