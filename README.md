@@ -18,6 +18,7 @@ github "teambition/AMRAudioSwift"
 let audioRecorder = AMRAudioRecorder()
 audioRecorder.volume = ...
 audioRecorder.proximityMonitoringEnabled = ...
+audioRecorder.screenBrightWhenPlaying = ...
 
 // assign delegate
 audioRecorder.delegate = self
@@ -28,7 +29,8 @@ audioRecorder.delegate = self
 audioRecorder.startRecord()
 audioRecorder.cancelRecord()
 audioRecorder.stopRecord()
-audioRecorder.play(amrData)
+audioRecorder.play(waveData)
+audioRecorder.playAmr(amrData)
 audioRecorder.stopPlay()
 ```
 
