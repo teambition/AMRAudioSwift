@@ -39,7 +39,7 @@ public class AMRAudioRecorder: NSObject {
     }
     public var volume: Float = 1
     public var proximityMonitoringEnabled = true
-    public var brightWhenPlaying = true
+    public var screenBrightWhenPlaying = true
 
     // MARK: - Life cycle
     public override init () {
@@ -62,22 +62,25 @@ extension AMRAudioRecorder {
         recorder = initRecorder()
         recorder?.prepareToRecord()
         recorder?.record()
+
         delegate?.audioRecorderDidStartRecording(self)
     }
 
     public func cancelRecord() {
-        UIApplication.sharedApplication().idleTimerDisabled = false
         recorder?.stop()
         recorder?.deleteRecording()
         recorder = nil
+        UIApplication.sharedApplication().idleTimerDisabled = false
+
         delegate?.audioRecorderDidCancelRecording(self)
     }
 
     public func stopRecord() {
-        UIApplication.sharedApplication().idleTimerDisabled = false
         let url = recorder?.url
         recorder?.stop()
         recorder = nil
+        UIApplication.sharedApplication().idleTimerDisabled = false
+
         delegate?.audioRecorderDidStopRecording(self, url: url)
     }
 }
@@ -95,8 +98,9 @@ extension AMRAudioRecorder {
         if player == nil {
             // is not playing, start play
             player = initPlayer(data)
+
             addProximitySensorObserver()
-            if brightWhenPlaying {
+            if screenBrightWhenPlaying {
                 UIApplication.sharedApplication().idleTimerDisabled = true
             }
 
@@ -128,12 +132,13 @@ extension AMRAudioRecorder {
     }
 
     public func stopPlay() {
-        removeProximitySensorObserver()
-        UIApplication.sharedApplication().idleTimerDisabled = false
         player?.stop()
         player = nil
+        removeProximitySensorObserver()
+        UIApplication.sharedApplication().idleTimerDisabled = false
+        activateOtherInterruptedAudioSessions()
+
         delegate?.audioRecorderDidStopPlaying(self)
-        inactiveAudioSession()
     }
 
     /**
@@ -174,18 +179,18 @@ extension AMRAudioRecorder {
         } catch let error as NSError {
             print("audio session set category error: \(error)")
         }
-        inactiveAudioSession()
+        activateOtherInterruptedAudioSessions()
     }
 
-    private func updateAudioSessionCategory(category: String) {
+    private func updateAudioSessionCategory(category: String, withOptions options: AVAudioSessionCategoryOptions) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(category)
+            try AVAudioSession.sharedInstance().setCategory(category, withOptions: options)
         } catch let error as NSError {
             print("audio session set category error: \(error)")
         }
     }
 
-    private func inactiveAudioSession() {
+    private func activateOtherInterruptedAudioSessions() {
         do {
             try AVAudioSession.sharedInstance().setActive(false, withOptions: [.NotifyOthersOnDeactivation])
         } catch let error as NSError {
@@ -222,21 +227,25 @@ extension AMRAudioRecorder {
     // MARK: - Device Observer
     private func addProximitySensorObserver() {
         UIDevice.currentDevice().proximityMonitoringEnabled = proximityMonitoringEnabled
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deviceProximityStateDidChange(_:)), name: UIDeviceProximityStateDidChangeNotification, object: nil)
+        if UIDevice.currentDevice().proximityMonitoringEnabled {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deviceProximityStateDidChange(_:)), name: UIDeviceProximityStateDidChangeNotification, object: nil)
+        }
     }
 
     private func removeProximitySensorObserver() {
+        if UIDevice.currentDevice().proximityMonitoringEnabled {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceProximityStateDidChangeNotification, object: nil)
+        }
         UIDevice.currentDevice().proximityMonitoringEnabled = false
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceProximityStateDidChangeNotification, object: nil)
     }
 
     func deviceProximityStateDidChange(notification: NSNotification) {
         if UIDevice.currentDevice().proximityState {
             // Device is close to user
-            updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord)
+            updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [])
         } else {
             // Device is not close to user
-            updateAudioSessionCategory(AVAudioSessionCategoryPlayback)
+            updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.DefaultToSpeaker])
         }
     }
 }
@@ -246,9 +255,10 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     public func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let weakSelf = self {
-                UIApplication.sharedApplication().idleTimerDisabled = false
                 let url = weakSelf.recorder?.url
                 weakSelf.recorder = nil
+                UIApplication.sharedApplication().idleTimerDisabled = false
+
                 weakSelf.delegate?.audioRecorderDidStopRecording(weakSelf, url: url)
                 weakSelf.delegate?.audioRecorderDidFinishRecording(weakSelf, successfully: flag)
             }
@@ -258,9 +268,10 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     public func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder, error: NSError?) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let weakSelf = self {
-                UIApplication.sharedApplication().idleTimerDisabled = false
                 weakSelf.recorder?.stop()
                 weakSelf.recorder = nil
+                UIApplication.sharedApplication().idleTimerDisabled = false
+
                 weakSelf.delegate?.audioRecorderEncodeErrorDidOccur(weakSelf, error: error)
             }
         }
@@ -269,12 +280,13 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     public func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let weakSelf = self {
+                weakSelf.player = nil
                 weakSelf.removeProximitySensorObserver()
                 UIApplication.sharedApplication().idleTimerDisabled = false
-                weakSelf.player = nil
+                weakSelf.activateOtherInterruptedAudioSessions()
+
                 weakSelf.delegate?.audioRecorderDidStopPlaying(weakSelf)
                 weakSelf.delegate?.audioRecorderDidFinishPlaying(weakSelf, successfully: flag)
-                weakSelf.inactiveAudioSession()
             }
         }
     }
@@ -282,12 +294,13 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     public func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer, error: NSError?) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let weakSelf = self {
-                weakSelf.removeProximitySensorObserver()
-                UIApplication.sharedApplication().idleTimerDisabled = false
                 weakSelf.player?.stop()
                 weakSelf.player = nil
+                weakSelf.removeProximitySensorObserver()
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                weakSelf.activateOtherInterruptedAudioSessions()
+
                 weakSelf.delegate?.audioRecorderDecodeErrorDidOccur(weakSelf, error: error)
-                weakSelf.inactiveAudioSession()
             }
         }
     }
