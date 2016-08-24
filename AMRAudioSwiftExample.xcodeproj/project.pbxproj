@@ -13,6 +13,8 @@
 		D31FE0521C868D9400901072 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D31FE0511C868D9400901072 /* Assets.xcassets */; };
 		D31FE0841C86B8A300901072 /* AMRAudioSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */; };
 		D31FE0851C86B8A300901072 /* AMRAudioSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D3C32B851D6C6147001031FA /* VoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C32B831D6C6147001031FA /* VoiceCell.swift */; };
+		D3C32B861D6C6147001031FA /* VoiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3C32B841D6C6147001031FA /* VoiceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +39,8 @@
 		D31FE0511C868D9400901072 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D31FE0561C868D9400901072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D31FE0831C86B8A300901072 /* AMRAudioSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = AMRAudioSwift.framework; path = "/Users/hongxin/Library/Developer/Xcode/DerivedData/AMRAudioSwift-cozxnvkhosgrwkdpgijtuuewgike/Build/Products/Debug-iphoneos/AMRAudioSwift.framework"; sourceTree = "<absolute>"; };
+		D3C32B831D6C6147001031FA /* VoiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceCell.swift; sourceTree = "<group>"; };
+		D3C32B841D6C6147001031FA /* VoiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoiceCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				D31FE04A1C868D9400901072 /* AppDelegate.swift */,
+				D3C32B841D6C6147001031FA /* VoiceCell.xib */,
+				D3C32B831D6C6147001031FA /* VoiceCell.swift */,
 				D31FE04C1C868D9400901072 /* ExampleViewController.swift */,
 				D31FE04E1C868D9400901072 /* Main.storyboard */,
 				D31FE0511C868D9400901072 /* Assets.xcassets */,
@@ -140,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D31FE0521C868D9400901072 /* Assets.xcassets in Resources */,
+				D3C32B861D6C6147001031FA /* VoiceCell.xib in Resources */,
 				D31FE0501C868D9400901072 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C32B851D6C6147001031FA /* VoiceCell.swift in Sources */,
 				D31FE04D1C868D9400901072 /* ExampleViewController.swift in Sources */,
 				D31FE04B1C868D9400901072 /* AppDelegate.swift in Sources */,
 			);

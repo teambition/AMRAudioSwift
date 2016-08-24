@@ -9,73 +9,23 @@
 import UIKit
 import AVFoundation
 
-public protocol AMRAudioRecorderDelegate: class {
-    func audioRecorderDidStartRecording(audioRecorder: AMRAudioRecorder)
-    func audioRecorderDidCancelRecording(audioRecorder: AMRAudioRecorder)
-    func audioRecorderDidStopRecording(audioRecorder: AMRAudioRecorder, url: NSURL?)
-    func audioRecorderEncodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?)
-    func audioRecorderDidFinishRecording(audioRecorder: AMRAudioRecorder, successfully flag: Bool)
-
-    func audioRecorderDidStartPlaying(audioRecorder: AMRAudioRecorder)
-    func audioRecorderDidStopPlaying(audioRecorder: AMRAudioRecorder)
-    func audioRecorderDecodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?)
-    func audioRecorderDidFinishPlaying(audioRecorder: AMRAudioRecorder, successfully flag: Bool)
-}
-
-public extension AMRAudioRecorderDelegate {
-    func audioRecorderDidStartRecording(audioRecorder: AMRAudioRecorder) {
-
-    }
-
-    func audioRecorderDidCancelRecording(audioRecorder: AMRAudioRecorder) {
-
-    }
-
-    func audioRecorderDidStopRecording(audioRecorder: AMRAudioRecorder, url: NSURL?) {
-
-    }
-
-    func audioRecorderEncodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?) {
-
-    }
-
-    func audioRecorderDidFinishRecording(audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
-
-    }
-
-    func audioRecorderDidStartPlaying(audioRecorder: AMRAudioRecorder) {
-
-    }
-
-    func audioRecorderDidStopPlaying(audioRecorder: AMRAudioRecorder) {
-
-    }
-
-    func audioRecorderDecodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?) {
-
-    }
-
-    func audioRecorderDidFinishPlaying(audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
-
-    }
-}
-
 public class AMRAudioRecorder: NSObject {
     public static let sharedRecorder = AMRAudioRecorder()
     public weak var delegate: AMRAudioRecorderDelegate?
+
     public private(set) var recorder: AVAudioRecorder? {
-        didSet {
-            if let _ = recorder {
-                recorder?.delegate = self
+        willSet {
+            if let newValue = newValue {
+                newValue.delegate = self
             } else {
                 recorder?.delegate = nil
             }
         }
     }
     public private(set) var player: AVAudioPlayer? {
-        didSet {
-            if let _ = player {
-                player?.delegate = self
+        willSet {
+            if let newValue = newValue {
+                newValue.delegate = self
             } else {
                 player?.delegate = nil
             }
@@ -89,6 +39,7 @@ public class AMRAudioRecorder: NSObject {
     }
     public var volume: Float = 1
     public var proximityMonitoringEnabled = true
+    public var brightWhenPlaying = true
 
     // MARK: - Life cycle
     public override init () {
@@ -97,13 +48,17 @@ public class AMRAudioRecorder: NSObject {
     }
 
     deinit {
+        recorder?.stop()
         recorder = nil
         player?.stop()
         player = nil
     }
+}
 
+extension AMRAudioRecorder {
     // MARK: - Record
     public func startRecord() {
+        UIApplication.sharedApplication().idleTimerDisabled = true
         recorder = initRecorder()
         recorder?.prepareToRecord()
         recorder?.record()
@@ -111,41 +66,48 @@ public class AMRAudioRecorder: NSObject {
     }
 
     public func cancelRecord() {
+        UIApplication.sharedApplication().idleTimerDisabled = false
         recorder?.stop()
         recorder?.deleteRecording()
+        recorder = nil
         delegate?.audioRecorderDidCancelRecording(self)
     }
 
     public func stopRecord() {
+        UIApplication.sharedApplication().idleTimerDisabled = false
         let url = recorder?.url
         recorder?.stop()
         recorder = nil
         delegate?.audioRecorderDidStopRecording(self, url: url)
     }
+}
 
+extension AMRAudioRecorder {
     // MARK: - Play
     /**
-    Plays an AMR audio asynchronously.
+    Plays a WAVE audio asynchronously.
 
     If is playing, stop play, else start play.
 
-    - parameter data: AMR audio data
+    - parameter data: WAVE audio data
     */
     public func play(data: NSData) {
         if player == nil {
             // is not playing, start play
-            let decodedData = AMRAudio.decodeAMRDataToWAVEData(data)
-            player = initPlayer(decodedData)
+            player = initPlayer(data)
             addProximitySensorObserver()
+            if brightWhenPlaying {
+                UIApplication.sharedApplication().idleTimerDisabled = true
+            }
+
             guard let success = player?.play() else {
                 return
             }
+
             if success {
                 delegate?.audioRecorderDidStartPlaying(self)
             } else {
-                player = nil
-                delegate?.audioRecorderDidStopPlaying(self)
-                inactiveAudioSession()
+                stopPlay()
             }
         } else {
             // is playing, stop play
@@ -153,8 +115,21 @@ public class AMRAudioRecorder: NSObject {
         }
     }
 
+    /**
+     Plays an AMR audio asynchronously.
+
+     If is playing, stop play, else start play.
+
+     - parameter data: AMR audio data
+     */
+    public func playAmr(amrData: NSData) {
+        let decodedData = AMRAudio.decodeAMRDataToWAVEData(amrData)
+        play(decodedData)
+    }
+
     public func stopPlay() {
         removeProximitySensorObserver()
+        UIApplication.sharedApplication().idleTimerDisabled = false
         player?.stop()
         player = nil
         delegate?.audioRecorderDidStopPlaying(self)
@@ -162,7 +137,7 @@ public class AMRAudioRecorder: NSObject {
     }
 
     /**
-     Get the duration of an audio data.
+     Get the duration of a WAVE audio data.
 
      - parameter data: WAVE audio data
 
@@ -177,10 +152,22 @@ public class AMRAudioRecorder: NSObject {
         }
         return nil
     }
+
+    /**
+     Get the duration of an AMR audio data.
+
+     - parameter data: AMR audio data
+
+     - returns: an optional NSTimeInterval instance.
+     */
+    public class func amrAudioDuration(amrData: NSData) -> NSTimeInterval? {
+        let decodedData = AMRAudio.decodeAMRDataToWAVEData(amrData)
+        return audioDuration(decodedData)
+    }
 }
 
 extension AMRAudioRecorder {
-    // MARK: - Helper
+    // MARK: - Helpers
     private func commonInit() {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.DefaultToSpeaker])
@@ -255,40 +242,53 @@ extension AMRAudioRecorder {
 }
 
 extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+    // MARK: - AVAudioRecorderDelegate and AVAudioPlayerDelegate
     public func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
-        delegate?.audioRecorderDidFinishRecording(self, successfully: flag)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let weakSelf = self {
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                let url = weakSelf.recorder?.url
+                weakSelf.recorder = nil
+                weakSelf.delegate?.audioRecorderDidStopRecording(weakSelf, url: url)
+                weakSelf.delegate?.audioRecorderDidFinishRecording(weakSelf, successfully: flag)
+            }
+        }
     }
 
     public func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder, error: NSError?) {
-        delegate?.audioRecorderEncodeErrorDidOccur(self, error: error)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let weakSelf = self {
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                weakSelf.recorder?.stop()
+                weakSelf.recorder = nil
+                weakSelf.delegate?.audioRecorderEncodeErrorDidOccur(weakSelf, error: error)
+            }
+        }
     }
 
     public func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        removeProximitySensorObserver()
-        self.player = nil
-        delegate?.audioRecorderDidStopPlaying(self)
-        delegate?.audioRecorderDidFinishPlaying(self, successfully: flag)
-        inactiveAudioSession()
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let weakSelf = self {
+                weakSelf.removeProximitySensorObserver()
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                weakSelf.player = nil
+                weakSelf.delegate?.audioRecorderDidStopPlaying(weakSelf)
+                weakSelf.delegate?.audioRecorderDidFinishPlaying(weakSelf, successfully: flag)
+                weakSelf.inactiveAudioSession()
+            }
+        }
     }
 
     public func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer, error: NSError?) {
-        removeProximitySensorObserver()
-        delegate?.audioRecorderDecodeErrorDidOccur(self, error: error)
-        inactiveAudioSession()
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let weakSelf = self {
+                weakSelf.removeProximitySensorObserver()
+                UIApplication.sharedApplication().idleTimerDisabled = false
+                weakSelf.player?.stop()
+                weakSelf.player = nil
+                weakSelf.delegate?.audioRecorderDecodeErrorDidOccur(weakSelf, error: error)
+                weakSelf.inactiveAudioSession()
+            }
+        }
     }
 }
-
-private struct AudioRecorder {
-    static let recordSettings:[String: AnyObject] = [AVFormatIDKey: NSNumber(unsignedInt: kAudioFormatLinearPCM),
-                                                     AVSampleRateKey: NSNumber(float: 8000.0),
-                                                     AVNumberOfChannelsKey: NSNumber(int: 1),
-                                                     AVLinearPCMBitDepthKey: NSNumber(int: 16),
-                                                     AVLinearPCMIsNonInterleaved: false,
-                                                     AVLinearPCMIsFloatKey: false,
-                                                     AVLinearPCMIsBigEndianKey: false,]
-    static func recordLocationURL() -> NSURL {
-        let recordLocationURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingFormat("%.0f.%@", NSDate.timeIntervalSinceReferenceDate() * 1000, "caf"))
-        return recordLocationURL
-    }
-}
-

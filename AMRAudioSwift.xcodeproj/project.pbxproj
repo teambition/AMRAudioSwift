@@ -12,6 +12,8 @@
 		D31FE07D1C86907C00901072 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = D31FE0781C86907C00901072 /* interf_enc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D31FE0801C86A7AF00901072 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = D31FE07F1C86A7AF00901072 /* amrFileCodec.m */; };
 		D31FE0821C86B80F00901072 /* AMRAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */; };
+		D37705111D66E3D000B41B35 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37705101D66E3D000B41B35 /* Protocols.swift */; };
+		D37705131D66E52600B41B35 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37705121D66E52600B41B35 /* Constants.swift */; };
 		D38FEE0C1C86D6ED00996AA3 /* AMRAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */; };
 		D38FEE0F1C86E22A00996AA3 /* AMRAudioSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3F002F51C8816750079B0A5 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */; };
@@ -25,6 +27,8 @@
 		D31FE0781C86907C00901072 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
 		D31FE07F1C86A7AF00901072 /* amrFileCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = amrFileCodec.m; sourceTree = "<group>"; };
 		D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMRAudioRecorder.swift; sourceTree = "<group>"; };
+		D37705101D66E3D000B41B35 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		D37705121D66E52600B41B35 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMRAudio.swift; sourceTree = "<group>"; };
 		D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRAudioSwift.h; sourceTree = "<group>"; };
 		D3F002F41C8816750079B0A5 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
@@ -62,7 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				D38FEE0E1C86E22A00996AA3 /* AMRAudioSwift.h */,
+				D37705121D66E52600B41B35 /* Constants.swift */,
 				D38FEE0B1C86D6ED00996AA3 /* AMRAudio.swift */,
+				D37705101D66E3D000B41B35 /* Protocols.swift */,
 				D31FE0811C86B80F00901072 /* AMRAudioRecorder.swift */,
 				D31FE0741C86907C00901072 /* Source */,
 				D31FE0711C868FA000901072 /* Supporting Files */,
@@ -171,6 +177,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D37705131D66E52600B41B35 /* Constants.swift in Sources */,
+				D37705111D66E3D000B41B35 /* Protocols.swift in Sources */,
 				D31FE0821C86B80F00901072 /* AMRAudioRecorder.swift in Sources */,
 				D31FE0801C86A7AF00901072 /* amrFileCodec.m in Sources */,
 				D38FEE0C1C86D6ED00996AA3 /* AMRAudio.swift in Sources */,
