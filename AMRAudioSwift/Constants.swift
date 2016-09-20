@@ -10,16 +10,16 @@ import Foundation
 import AVFoundation
 
 internal struct AudioRecorder {
-    internal static let recordSettings: [String: AnyObject] = [AVFormatIDKey: NSNumber(unsignedInt: kAudioFormatLinearPCM),
-                                                               AVSampleRateKey: NSNumber(float: 8000.0),
-                                                               AVNumberOfChannelsKey: NSNumber(int: 1),
-                                                               AVLinearPCMBitDepthKey: NSNumber(int: 16),
-                                                               AVLinearPCMIsNonInterleaved: false,
-                                                               AVLinearPCMIsFloatKey: false,
-                                                               AVLinearPCMIsBigEndianKey: false,]
+    internal static let recordSettings: [String: Any] = [AVFormatIDKey: NSNumber(value: kAudioFormatLinearPCM),
+                                                         AVSampleRateKey: NSNumber(value: 8000.0),
+                                                         AVNumberOfChannelsKey: NSNumber(value: 1),
+                                                         AVLinearPCMBitDepthKey: NSNumber(value: 16),
+                                                         AVLinearPCMIsNonInterleaved: false,
+                                                         AVLinearPCMIsFloatKey: false,
+                                                         AVLinearPCMIsBigEndianKey: false]
 
-    internal static func recordLocationURL() -> NSURL {
-        let recordLocationURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingFormat("%.0f.%@", NSDate.timeIntervalSinceReferenceDate() * 1000, "caf"))
-        return recordLocationURL
+    internal static func recordLocationURL() -> URL {
+        let recordLocationPath = NSTemporaryDirectory().appendingFormat("%.0f.%@", Date.timeIntervalSinceReferenceDate * 1000, "caf")
+        return URL(fileURLWithPath: recordLocationPath)
     }
 }

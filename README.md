@@ -7,7 +7,7 @@ At the bottom level,  ```libopencore-amr``` is applied for audio decoding.
 
 ##How To Get Started
 ###Carthage
-Specify "AMRAudioSwift" in your Cartfile:
+Specify "AMRAudioSwift" in your ```Cartfile```:
 ```ogdl 
 github "teambition/AMRAudioSwift"
 ```
@@ -17,8 +17,8 @@ github "teambition/AMRAudioSwift"
 ```swift
 let audioRecorder = AMRAudioRecorder()
 audioRecorder.volume = ...
-audioRecorder.proximityMonitoringEnabled = ...
-audioRecorder.screenBrightWhenPlaying = ...
+audioRecorder.isProximityMonitoringEnabled = ...
+audioRecorder.isScreenBrightWhenPlaying = ...
 
 // assign delegate
 audioRecorder.delegate = self
@@ -36,39 +36,39 @@ audioRecorder.stopPlay()
 
 #####  Implement delegate
 ```swift
-func audioRecorderDidStartRecording(audioRecorder: AMRAudioRecorder) {
+func audioRecorderDidStartRecording(_ audioRecorder: AMRAudioRecorder) {
     // do something
 }
 
-func audioRecorderDidCancelRecording(audioRecorder: AMRAudioRecorder) {
+func audioRecorderDidCancelRecording(_ audioRecorder: AMRAudioRecorder) {
     // do something
 }
 
-func audioRecorderDidStopRecording(audioRecorder: AMRAudioRecorder, url: NSURL?) {
+func audioRecorderDidStopRecording(_ audioRecorder: AMRAudioRecorder, withURL url: URL?) {
     // do something
 }
 
-func audioRecorderEncodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?) {
+func audioRecorderEncodeErrorDidOccur(_ audioRecorder: AMRAudioRecorder, error: Error?) {
     // do something
 }
 
-func audioRecorderDidFinishRecording(audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
+func audioRecorderDidFinishRecording(_ audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
     // do something
 }
 
-func audioRecorderDidStartPlaying(audioRecorder: AMRAudioRecorder) {
+func audioRecorderDidStartPlaying(_ audioRecorder: AMRAudioRecorder) {
     // do something
 }
 
-func audioRecorderDidStopPlaying(audioRecorder: AMRAudioRecorder) {
+func audioRecorderDidStopPlaying(_ audioRecorder: AMRAudioRecorder) {
     // do something
 }
 
-func audioRecorderDecodeErrorDidOccur(audioRecorder: AMRAudioRecorder, error: NSError?) {
+func audioRecorderDecodeErrorDidOccur(_ audioRecorder: AMRAudioRecorder, error: Error?) {
     // do something
 }
 
-func audioRecorderDidFinishPlaying(audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
+func audioRecorderDidFinishPlaying(_ audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
     // do something
 }
 ```

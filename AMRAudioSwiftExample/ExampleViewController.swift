@@ -9,15 +9,15 @@
 import UIKit
 import AMRAudioSwift
 
-typealias Voice = (duration: NSTimeInterval?, amrData: NSData, title: String)
+typealias Voice = (duration: TimeInterval?, amrData: Data, title: String)
 
 enum AudioRecorderState {
-    case Normal
-    case Recording
+    case normal
+    case recording
 }
 
-let dateFormatter: NSDateFormatter = {
-    let dateFormatter = NSDateFormatter()
+let dateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm:ss"
     return dateFormatter
 }()
@@ -27,19 +27,19 @@ class ExampleViewController: UIViewController {
     @IBOutlet weak var primaryButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
 
-    private var audioRecorder = AMRAudioRecorder.sharedRecorder
-    private var voices = [Voice]()
-    private var state: AudioRecorderState = .Normal {
+    fileprivate var audioRecorder = AMRAudioRecorder.sharedRecorder
+    fileprivate var voices = [Voice]()
+    fileprivate var state: AudioRecorderState = .normal {
         didSet {
             switch state {
-            case .Normal:
-                primaryButton.setTitle("Record", forState: .Normal)
+            case .normal:
+                primaryButton.setTitle("Record", for: .normal)
                 stopAnimation()
-                cancelButton.hidden = true
-            case .Recording:
-                primaryButton.setTitle("Recording...", forState: .Normal)
+                cancelButton.isHidden = true
+            case .recording:
+                primaryButton.setTitle("Recording...", for: .normal)
                 startAnimation()
-                cancelButton.hidden = false
+                cancelButton.isHidden = false
             }
         }
     }
@@ -47,43 +47,43 @@ class ExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         audioRecorder.delegate = self
-        state = .Normal
+        state = .normal
         tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .None
-        tableView.registerNib(UINib(nibName: "VoiceCell", bundle: nil), forCellReuseIdentifier: kVoiceCellID)
+        tableView.separatorStyle = .none
+        tableView.register(UINib(nibName: "VoiceCell", bundle: nil), forCellReuseIdentifier: kVoiceCellID)
     }
 
-    private func startAnimation() {
+    fileprivate func startAnimation() {
         let animation: CABasicAnimation = {
             let animation = CABasicAnimation(keyPath: "transform")
-            animation.fromValue = NSValue(CATransform3D: CATransform3DIdentity)
-            animation.toValue = NSValue(CATransform3D: CATransform3DMakeRotation(CGFloat(M_PI_2), 0, 0, 1))
+            animation.fromValue = NSValue(caTransform3D: CATransform3DIdentity)
+            animation.toValue = NSValue(caTransform3D: CATransform3DMakeRotation(CGFloat(M_PI_2), 0, 0, 1))
             animation.duration = 1.5
-            animation.cumulative = true
+            animation.isCumulative = true
             animation.repeatCount = FLT_MAX
             return animation
         }()
-        primaryButton.layer.addAnimation(animation, forKey: "rotation")
+        primaryButton.layer.add(animation, forKey: "rotation")
     }
 
-    private func stopAnimation() {
+    fileprivate func stopAnimation() {
         primaryButton.layer.removeAllAnimations()
     }
 
-    @IBAction func primaryButtonTapped(sender: UIButton) {
+    @IBAction func primaryButtonTapped(_ sender: UIButton) {
         switch state {
-        case .Normal:
+        case .normal:
             audioRecorder.stopPlay()
             audioRecorder.delegate = self
             audioRecorder.startRecord()
-        case .Recording:
+        case .recording:
             audioRecorder.stopRecord()
             audioRecorder.delegate = nil
         }
     }
 
-    @IBAction func cancelButtonTapped(sender: UIButton) {
-        guard state == .Recording else {
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        guard state == .recording else {
             return
         }
         audioRecorder.cancelRecord()
@@ -92,58 +92,58 @@ class ExampleViewController: UIViewController {
 }
 
 extension ExampleViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return voices.count
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kVoiceCellID) as! VoiceCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kVoiceCellID) as! VoiceCell
 
         let voice = voices[indexPath.row]
         cell.voice = voice
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension ExampleViewController: AMRAudioRecorderDelegate {
-    func audioRecorderDidStartRecording(audioRecorder: AMRAudioRecorder) {
+    func audioRecorderDidStartRecording(_ audioRecorder: AMRAudioRecorder) {
         print("*********************start recording*********************")
-        state = .Recording
+        state = .recording
     }
 
-    func audioRecorderDidCancelRecording(audioRecorder: AMRAudioRecorder) {
+    func audioRecorderDidCancelRecording(_ audioRecorder: AMRAudioRecorder) {
         print("*********************cancel recording*********************")
-        state = .Normal
+        state = .normal
     }
 
-    func audioRecorderDidStopRecording(audioRecorder: AMRAudioRecorder, url: NSURL?) {
+    func audioRecorderDidStopRecording(_ audioRecorder: AMRAudioRecorder, withURL url: URL?) {
         print("*********************stop recording*********************")
-        state = .Normal
-        guard let url = url, data = NSData(contentsOfURL: url) else {
+        state = .normal
+        guard let url = url, let data = try? Data(contentsOf: url) else {
             return
         }
-        let amrData = AMRAudio.encodeWAVEDataToAMRData(data, channels: 1, bitsPerSample: 16)
-        let voice = (duration: AMRAudioRecorder.audioDuration(data), amrData: amrData, title: "Voice \(dateFormatter.stringFromDate(NSDate()))")
-        let indexPath = NSIndexPath(forRow: voices.count, inSection: 0)
+        let amrData = AMRAudio.encodeWAVEDataToAMRData(waveData: data, channels: 1, bitsPerSample: 16)
+        let voice = (duration: AMRAudioRecorder.audioDuration(from: data), amrData: amrData, title: "Voice \(dateFormatter.string(from: Date()))")
+        let indexPath = IndexPath(row: voices.count, section: 0)
         tableView.beginUpdates()
         voices.append(voice)
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        tableView.insertRows(at: [indexPath], with: .fade)
         tableView.endUpdates()
     }
 
-    func audioRecorderDidFinishRecording(audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
         let result = flag ? "successfully" : "unsuccessfully"
         print("*********************finish recording \(result)*********************")
     }
