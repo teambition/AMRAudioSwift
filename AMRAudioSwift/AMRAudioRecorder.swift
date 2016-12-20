@@ -59,17 +59,22 @@ extension AMRAudioRecorder {
     // MARK: - Record
     public func startRecord() {
         UIApplication.shared.isIdleTimerDisabled = true
-        recorder = initRecorder()
-        recorder?.prepareToRecord()
-        recorder?.record()
+        DispatchQueue.global().async {
+            DispatchQueue.main.async { [weak self] in
+                self?.recorder?.record()
+            }
+        }
 
         delegate?.audioRecorderDidStartRecording(self)
     }
 
     public func cancelRecord() {
-        recorder?.stop()
-        recorder?.deleteRecording()
-        recorder = nil
+        DispatchQueue.global().async {
+            DispatchQueue.main.async { [weak self] in
+                self?.recorder?.stop()
+                self?.recorder?.deleteRecording()
+            }
+        }
         UIApplication.shared.isIdleTimerDisabled = false
 
         delegate?.audioRecorderDidCancelRecording(self)
@@ -78,7 +83,6 @@ extension AMRAudioRecorder {
     public func stopRecord() {
         let url = recorder?.url
         recorder?.stop()
-        recorder = nil
         UIApplication.shared.isIdleTimerDisabled = false
 
         delegate?.audioRecorderDidStopRecording(self, withURL: url)
@@ -180,6 +184,7 @@ extension AMRAudioRecorder {
             print("audio session set category error: \(error)")
         }
         activateOtherInterruptedAudioSessions()
+        recorder = initRecorder()
     }
 
     fileprivate func updateAudioSessionCategory(_ category: String, with options: AVAudioSessionCategoryOptions) {
@@ -203,7 +208,6 @@ extension AMRAudioRecorder {
         do {
             try recorder = AVAudioRecorder(url: AudioRecorder.recordLocationURL(), settings: AudioRecorder.recordSettings)
             recorder?.isMeteringEnabled = true
-            recorder?.prepareToRecord()
         } catch let error {
             print("init recorder error: \(error)")
         }
@@ -256,8 +260,8 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         DispatchQueue.main.async { [weak self] in
             if let weakSelf = self {
                 let url = weakSelf.recorder?.url
-                weakSelf.recorder = nil
                 UIApplication.shared.isIdleTimerDisabled = false
+                weakSelf.activateOtherInterruptedAudioSessions()
 
                 weakSelf.delegate?.audioRecorderDidStopRecording(weakSelf, withURL: url)
                 weakSelf.delegate?.audioRecorderDidFinishRecording(weakSelf, successfully: flag)
@@ -269,8 +273,8 @@ extension AMRAudioRecorder: AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         DispatchQueue.main.async { [weak self] in
             if let weakSelf = self {
                 weakSelf.recorder?.stop()
-                weakSelf.recorder = nil
                 UIApplication.shared.isIdleTimerDisabled = false
+                weakSelf.activateOtherInterruptedAudioSessions()
 
                 weakSelf.delegate?.audioRecorderEncodeErrorDidOccur(weakSelf, error: error)
             }

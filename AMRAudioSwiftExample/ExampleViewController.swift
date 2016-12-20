@@ -73,9 +73,13 @@ class ExampleViewController: UIViewController {
     @IBAction func primaryButtonTapped(_ sender: UIButton) {
         switch state {
         case .normal:
-            audioRecorder.stopPlay()
             audioRecorder.delegate = self
-            audioRecorder.startRecord()
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    self.audioRecorder.stopPlay()
+                    self.audioRecorder.startRecord()
+                }
+            }
         case .recording:
             audioRecorder.stopRecord()
             audioRecorder.delegate = nil
