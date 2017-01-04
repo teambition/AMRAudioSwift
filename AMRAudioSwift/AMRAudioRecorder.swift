@@ -69,6 +69,10 @@ extension AMRAudioRecorder {
     }
 
     public func cancelRecord() {
+        if !isRecording {
+            return
+        }
+
         DispatchQueue.global().async {
             DispatchQueue.main.async { [weak self] in
                 self?.recorder?.stop()
