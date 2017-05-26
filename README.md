@@ -1,19 +1,19 @@
-#AMRAudioSwift
+# AMRAudioSwift
 AMRAudioSwift is a useful tool to encode or decode audio between AMR and WAVE. It's written in Swift, and it supports [Bitcode](https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW3).
 
 In addition, AMRAudioSwift contains an audio recorder/player, which can record voice and play AMR data.
 
 At the bottom level,  ```libopencore-amr``` is applied for audio decoding.
 
-##How To Get Started
-###Carthage
+## How To Get Started
+### Carthage
 Specify "AMRAudioSwift" in your ```Cartfile```:
 ```ogdl 
 github "teambition/AMRAudioSwift"
 ```
 
-###Usage
-#####  Configuration
+### Usage
+####  Configuration
 ```swift
 let audioRecorder = AMRAudioRecorder()
 audioRecorder.volume = ...
@@ -24,7 +24,7 @@ audioRecorder.isScreenBrightWhenPlaying = ...
 audioRecorder.delegate = self
 ```
 
-##### Recording and Playing
+#### Recording and Playing
 ```swift
 audioRecorder.startRecord()
 audioRecorder.cancelRecord()
@@ -34,7 +34,7 @@ audioRecorder.playAmr(amrData)
 audioRecorder.stopPlay()
 ```
 
-#####  Implement delegate
+####  Implement delegate
 ```swift
 func audioRecorderDidStartRecording(_ audioRecorder: AMRAudioRecorder) {
     // do something
