@@ -56,7 +56,7 @@ class VoiceCell: UITableViewCell {
         progressLayer.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width * CGFloat(progress), height: bounds.height))
     }
 
-    func contentViewTapped(_ sender: UITapGestureRecognizer) {
+    @objc func contentViewTapped(_ sender: UITapGestureRecognizer) {
         if isPlaying {
             stopPlay()
         } else {
@@ -86,7 +86,7 @@ extension VoiceCell {
         audioRecorder.stopPlay()
     }
 
-    func updateProgress(_ timer: Timer) {
+    @objc func updateProgress(_ timer: Timer) {
         DispatchQueue.main.async {
             self.playedSeconds += timer.timeInterval
             self.detailTextLabel?.text = self.timeString(with: self.playedSeconds)

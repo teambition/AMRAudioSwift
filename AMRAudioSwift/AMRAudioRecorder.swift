@@ -247,7 +247,7 @@ extension AMRAudioRecorder {
         UIDevice.current.isProximityMonitoringEnabled = false
     }
 
-    func deviceProximityStateDidChange(_ notification: Notification) {
+    @objc func deviceProximityStateDidChange(_ notification: Notification) {
         if UIDevice.current.proximityState {
             // Device is close to user
             updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord, with: [])

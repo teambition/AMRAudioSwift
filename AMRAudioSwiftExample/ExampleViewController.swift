@@ -57,10 +57,10 @@ class ExampleViewController: UIViewController {
         let animation: CABasicAnimation = {
             let animation = CABasicAnimation(keyPath: "transform")
             animation.fromValue = NSValue(caTransform3D: CATransform3DIdentity)
-            animation.toValue = NSValue(caTransform3D: CATransform3DMakeRotation(CGFloat(M_PI_2), 0, 0, 1))
+            animation.toValue = NSValue(caTransform3D: CATransform3DMakeRotation(.pi / 2, 0, 0, 1))
             animation.duration = 1.5
             animation.isCumulative = true
-            animation.repeatCount = FLT_MAX
+            animation.repeatCount = .greatestFiniteMagnitude
             return animation
         }()
         primaryButton.layer.add(animation, forKey: "rotation")
