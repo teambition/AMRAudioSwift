@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 open class AMRAudioRecorder: NSObject {
-    open static let sharedRecorder = AMRAudioRecorder()
+    public static let shared = AMRAudioRecorder()
     open weak var delegate: AMRAudioRecorderDelegate?
 
     open fileprivate(set) var recorder: AVAudioRecorder? {
@@ -183,7 +183,7 @@ extension AMRAudioRecorder {
     // MARK: - Helpers
     fileprivate func commonInit() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, with: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
         } catch let error {
             print("audio session set category error: \(error)")
         }
@@ -191,9 +191,9 @@ extension AMRAudioRecorder {
         recorder = initRecorder()
     }
 
-    fileprivate func updateAudioSessionCategory(_ category: String, with options: AVAudioSessionCategoryOptions) {
+    fileprivate func updateAudioSessionCategory(_ category: AVAudioSession.Category, with options: AVAudioSession.CategoryOptions) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(category, with: options)
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: options)
         } catch let error {
             print("audio session set category error: \(error)")
         }
@@ -201,7 +201,7 @@ extension AMRAudioRecorder {
 
     fileprivate func activateOtherInterruptedAudioSessions() {
         do {
-            try AVAudioSession.sharedInstance().setActive(false, with: [.notifyOthersOnDeactivation])
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch let error {
             print("audio session set active error: \(error)")
         }
@@ -236,13 +236,13 @@ extension AMRAudioRecorder {
     fileprivate func addProximitySensorObserver() {
         UIDevice.current.isProximityMonitoringEnabled = isProximityMonitoringEnabled
         if UIDevice.current.isProximityMonitoringEnabled {
-            NotificationCenter.default.addObserver(self, selector: #selector(deviceProximityStateDidChange(_:)), name: .UIDeviceProximityStateDidChange, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(deviceProximityStateDidChange(_:)), name: UIDevice.proximityStateDidChangeNotification, object: nil)
         }
     }
 
     fileprivate func removeProximitySensorObserver() {
         if UIDevice.current.isProximityMonitoringEnabled {
-            NotificationCenter.default.removeObserver(self, name: .UIDeviceProximityStateDidChange, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIDevice.proximityStateDidChangeNotification, object: nil)
         }
         UIDevice.current.isProximityMonitoringEnabled = false
     }
@@ -250,10 +250,10 @@ extension AMRAudioRecorder {
     @objc func deviceProximityStateDidChange(_ notification: Notification) {
         if UIDevice.current.proximityState {
             // Device is close to user
-            updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord, with: [])
+            updateAudioSessionCategory(.playAndRecord, with: [])
         } else {
             // Device is not close to user
-            updateAudioSessionCategory(AVAudioSessionCategoryPlayAndRecord, with: [.defaultToSpeaker])
+            updateAudioSessionCategory(.playAndRecord, with: .defaultToSpeaker)
         }
     }
 }

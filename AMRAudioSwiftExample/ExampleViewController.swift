@@ -27,7 +27,7 @@ class ExampleViewController: UIViewController {
     @IBOutlet weak var primaryButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
 
-    fileprivate var audioRecorder = AMRAudioRecorder.sharedRecorder
+    fileprivate var audioRecorder = AMRAudioRecorder.shared
     fileprivate var voices = [Voice]()
     fileprivate var state: AudioRecorderState = .normal {
         didSet {

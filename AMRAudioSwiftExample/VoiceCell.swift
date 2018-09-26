@@ -13,7 +13,7 @@ let kVoiceCellID = "VoiceCell"
 let kPlayTimerInterval: TimeInterval = 1.0 / 60
 
 class VoiceCell: UITableViewCell {
-    let audioRecorder = AMRAudioRecorder.sharedRecorder
+    let audioRecorder = AMRAudioRecorder.shared
     static var currentPlayingCell: VoiceCell?
     var progress: Double = 0 {
         didSet {
@@ -38,8 +38,8 @@ class VoiceCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.backgroundColor = UIColor.clear
+        textLabel?.backgroundColor = .clear
+        detailTextLabel?.backgroundColor = .clear
         progressLayer.backgroundColor = UIColor(red: 201 / 255, green: 243 / 255, blue: 252 / 255, alpha: 1).cgColor
         layer.insertSublayer(progressLayer, at: 0)
         progress = 0
@@ -53,7 +53,7 @@ class VoiceCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        progressLayer.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width * CGFloat(progress), height: bounds.height))
+        progressLayer.frame = CGRect(origin: .zero, size: CGSize(width: bounds.width * CGFloat(progress), height: bounds.height))
     }
 
     @objc func contentViewTapped(_ sender: UITapGestureRecognizer) {
