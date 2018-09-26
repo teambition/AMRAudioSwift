@@ -74,7 +74,7 @@ func audioRecorderDidFinishPlaying(_ audioRecorder: AMRAudioRecorder, successful
 ```
 
 ## Minimum Requirement
-iOS 8.0
+iOS 10.0
 
 ## Release Notes
 * [Release Notes](https://github.com/teambition/AMRAudioSwift/releases)
