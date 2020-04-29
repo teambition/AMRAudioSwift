@@ -12,6 +12,14 @@ Specify "AMRAudioSwift" in your ```Cartfile```:
 github "teambition/AMRAudioSwift"
 ```
 
+### Cocoapods
+Specify "AMRAudioSwift" in your ```Podfile``` with the git url:
+
+Note: The use of the git url can be removed when this library is published to Cocoapods.
+```
+pod 'AMRAudioSwift', :git => 'https://github.com/teambition/AMRAudioSwift.git'
+```
+
 ### Usage
 ####  Configuration
 ```swift
