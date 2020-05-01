@@ -47,6 +47,8 @@ public protocol AMRAudioRecorderDelegate: class {
      - parameter flag:          true on successful completion of playback; false if playback stopped because the system could not decode the audio data.
      */
     func audioRecorderDidFinishPlaying(_ audioRecorder: AMRAudioRecorder, successfully flag: Bool)
+
+    func audioRecorderDidPausePlaying(_ audioRecorder: AMRAudioRecorder)
 }
 
 public extension AMRAudioRecorderDelegate {
@@ -83,6 +85,10 @@ public extension AMRAudioRecorderDelegate {
     }
 
     func audioRecorderDidFinishPlaying(_ audioRecorder: AMRAudioRecorder, successfully flag: Bool) {
+
+    }
+
+    func audioRecorderDidPausePlaying(_ audioRecorder: AMRAudioRecorder) {
 
     }
 }
