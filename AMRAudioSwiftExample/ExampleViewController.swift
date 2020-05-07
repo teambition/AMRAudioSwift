@@ -138,7 +138,7 @@ extension ExampleViewController: AMRAudioRecorderDelegate {
         guard let url = url, let data = try? Data(contentsOf: url) else {
             return
         }
-        let amrData = AMRAudio.encodeWAVEDataToAMRData(waveData: data, channels: 1, bitsPerSample: 16)
+        let amrData = AMRAudio.encodeWAVEDataToAMRData(waveData: data, channels: 1, bitsPerSample: 16, bitRateMode: MR122)
         let voice = (duration: AMRAudioRecorder.audioDuration(from: data), amrData: amrData, title: "Voice \(dateFormatter.string(from: Date()))")
         let indexPath = IndexPath(row: voices.count, section: 0)
         tableView.beginUpdates()

@@ -212,6 +212,7 @@ extension AMRAudioRecorder {
         do {
             try recorder = AVAudioRecorder(url: AudioRecorder.recordLocationURL(), settings: AudioRecorder.recordSettings)
             recorder?.isMeteringEnabled = true
+            recorder?.prepareToRecord()
         } catch let error {
             print("init recorder error: \(error)")
         }
