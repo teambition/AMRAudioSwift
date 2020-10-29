@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AMRAudioSwift'
-  s.version          = '0.2.3'
+  s.version          = '0.2.4'
   s.summary          = 'AMRAudioSwift is a useful tool to encode or decode audio between AMR and WAVE.'
   s.description      = <<-DESC
   AMRAudioSwift is a useful tool to encode or decode audio between AMR and WAVE. It's written in Swift, and it supports Bitcode.
