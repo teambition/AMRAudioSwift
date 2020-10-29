@@ -321,7 +321,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AMRAudioSwift/Source",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teambition.AMRAudioSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -348,7 +348,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AMRAudioSwift/Source",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Teambition.AMRAudioSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teambition.AMRAudioSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
