@@ -68,6 +68,6 @@ int EncodeWAVEFileToAMRFile(const char *pchWAVEFilename, const char *pchAMRFileN
 int DecodeAMRFileToWAVEFile(const char *pchAMRFileName, const char *pchWAVEFilename);
 
 NSData *DecodeAMRToWAVE(NSData *data);
-NSData *EncodeWAVEToAMR(NSData *data, int nChannels, int nBitsPerSample);
+NSData *EncodeWAVEToAMR(NSData *data, int nChannels, int nBitsPerSample, enum Mode nBitRateMode);
 
 #endif

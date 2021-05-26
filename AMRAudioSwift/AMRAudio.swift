@@ -13,7 +13,7 @@ public struct AMRAudio {
         return DecodeAMRToWAVE(data)
     }
 
-    public static func encodeWAVEDataToAMRData(waveData data: Data, channels: Int, bitsPerSample: Int) -> Data {
-        return EncodeWAVEToAMR(data, Int32(channels), Int32(bitsPerSample))
+    public static func encodeWAVEDataToAMRData(waveData data: Data, channels: Int, bitsPerSample: Int, bitRateMode: Mode) -> Data {
+        return EncodeWAVEToAMR(data, Int32(channels), Int32(bitsPerSample), bitRateMode)
     }
 }
