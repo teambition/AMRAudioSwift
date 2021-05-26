@@ -139,6 +139,20 @@ extension AMRAudioRecorder {
         play(decodedData)
     }
 
+    public func resumePlay() {
+        guard let player = player, !isPlaying else {
+            return
+        }
+        player.play()
+        delegate?.audioRecorderDidStartPlaying(self)
+    }
+
+    public func pausePlay() {
+        guard let player = player, isPlaying else { return }
+        player.pause()
+        delegate?.audioRecorderDidPausePlaying(self)
+    }
+
     public func stopPlay() {
         player?.stop()
         player = nil
